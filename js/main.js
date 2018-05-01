@@ -6,7 +6,9 @@ function saveBookmark(e){
     var siteName =document.getElementById('siteName').value;
     var siteUrl =document.getElementById('siteUrl').value;
 
-
+    if (!validateForm (siteUrl, siteUrl)){
+        return false;
+    }
     var bookmark = {
         name: siteName,
         url: siteUrl
@@ -15,17 +17,17 @@ function saveBookmark(e){
 
     // Test if bookmarks is null
     if(localStorage.getItem('bookmarks') === null){
-        // Init array
         var bookmarks = [];
-        // Add to array
         bookmarks.push(bookmark);
+
         // Set to localStorage
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     } else {
         // Get bookmarks from localStorage
         var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-        // Add bookmark to array
+
         bookmarks.push(bookmark);
+
         // Re-set back to localStorage
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     }
@@ -42,9 +44,9 @@ function saveBookmark(e){
 
 // Delete bookmark
 function deleteBookmark(url){
-    // Get bookmarks from localStorage
     var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-    // Loop through the bookmarks
+
+
     for(var i =0;i < bookmarks.length;i++){
         if(bookmarks[i].url === url){
             // Remove from array
@@ -60,9 +62,7 @@ function deleteBookmark(url){
 
 // Fetch bookmarks
 function fetchBookmarks(){
-    // Get bookmarks from localStorage
     var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-    // Get output id
     var bookmarksResults = document.getElementById('bookmarksResults');
 
     // Build output
@@ -79,3 +79,23 @@ function fetchBookmarks(){
             '</div>';
     }
 }
+
+        //regular expression to check if a string is a valid URL
+    var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+
+        if (!siteUrl.match(regex)){
+            alert('Not valid URL');
+
+            // noinspection JSAnnotator
+            return false;
+        }
+
+                //validate form
+        if(!siteName || !siteUrl){
+            alert('Please fill in form');
+            // noinspection JSAnnotator
+            return false;
+        }
+
+        // noinspection JSAnnotator
+        return true;
