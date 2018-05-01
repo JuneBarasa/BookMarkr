@@ -80,22 +80,21 @@ function fetchBookmarks(){
     }
 }
 
-        //regular expression to check if a string is a valid URL
+// Validate Form
+function validateForm(siteName, siteUrl){
+    if(!siteName || !siteUrl){
+        alert('Please fill in the form');
+        return false;
+    }
+
     var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+    var regex = new RegExp(expression);
 
-        if (!siteUrl.match(regex)){
-            alert('Not valid URL');
+    if(!siteUrl.match(regex)){
+        alert('Please use a valid URL');
+        return false;
+    }
 
-            // noinspection JSAnnotator
-            return false;
-        }
+    return true;
+}
 
-                //validate form
-        if(!siteName || !siteUrl){
-            alert('Please fill in form');
-            // noinspection JSAnnotator
-            return false;
-        }
-
-        // noinspection JSAnnotator
-        return true;
