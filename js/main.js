@@ -13,6 +13,7 @@ function saveBookMark(a) {
 
     //test if bookmark is null
     if (localStorage.getItem('bookmarks') === null){
+        //init array
     var bookmarks = [];
     bookmarks.push(bookmark);
 
@@ -22,36 +23,62 @@ function saveBookMark(a) {
     }
     else {
         //get bookmarks from local storage
-        var bookMarks =JSON.parse(localStorage.getItem('bookmarks'));
+        var bookmarks =JSON.parse(localStorage.getItem('bookmarks'));
         bookmark.push(bookmark);
 
         //re-set back to local storage
-        localStorage.setItem('bookmarks', JSON.stringify('bookmarks'));
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     }
+
+    //re-fetch bookmarks
+    fetchBookmarks();
 
     //prevents form from submitting
     a.preventDefault();
+}
+
+//delete bookmark
+
+function deleteBookmark(url) {
+
+    //get bookmark from localStorage
+
+    var bookmarks =JSON.parse(localStorage.getItem('bookmarks'));
+
+    for (var i = 0; i < bookmarks.length; i++){
+        if(bookmarks[i].url === url){
+            bookmarks.splice(i, 1);
+        }
+
+    }
+
+    //re-set back to local storage
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+
+    //refetch bookmarks
+    fetchBookmarks();
+
 }
 
 //fetch Bookmarks from local storage and display them on the web page
 
 function fetchBookmarks() {
 
-    var bookMarks =JSON.parse(localStorage.getItem('bookmarks'));
+    var bookmarks =JSON.parse(localStorage.getItem('bookmarks'));
     var bookmarksResults = document.getElementById('bookmarksResults');
 
     //build output
     bookmarksResults.innerHTML ='';
-    for (var i = 0; i < bookMarks.length; i++){
-        var name = bookMarks[i].name;
-        var url = bookMarks[i].url;
+    for (var i = 0; i < bookmarks.length; i++){
+        var name = bookmarks[i].name;
+        var url = bookmarks[i].url;
 
         bookmarksResults.innerHTML += '<div class="well">'+
-            '<h3>'+name+
-            '<a class="btn btn-success" target="_blank" href="#">Visit</a> ' +
-            '<a onclick="deleteBookmark()" class="btn btn-danger" target="_blank" href="#">Delete</a> ' +
-            '</h3>'+
-            '</div>';
+                                        '<h3>'+name +
+                                        '<a class="btn btn-success" target="_blank" href="'+url+'">Visit</a> ' +
+                                        '<a onclick="deleteBookmark(\''+url+'\')" class="btn btn-danger" href="#">Delete</a> ' +
+                                        '</h3>'+
+                                        '</div>';
 
     }
 
