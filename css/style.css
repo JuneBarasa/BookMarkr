@@ -85,6 +85,18 @@ h2 {
     }
 }
 
-#bookmarksResults {
-    padding-bottom: 24px;
+.btn{
+    float: right;
+}
+
+#bookmarksResults{
+    border-style: double;
+}
+ .well{
+     padding-top: 10px;
+     padding-bottom: 24px;
+     padding-left: 10px;
+     padding-right: 10px;
+     border-bottom-color: black;
+     text-emphasis-position: right;
 }
